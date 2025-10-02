@@ -1,0 +1,35 @@
+{% extends "bootstrap/base.html" %}
+{% block styles %}{{ super() }}<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">{% endblock %}
+{% block title %}Submission - {{ project.title }}{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <a href="{{ url_for('project_detail', project_id=project.id) }}" class="btn btn-link">← Back to Project</a>
+  <h3 class="mt-2">Submission Results</h3>
+  <div class="row mt-3">
+    <div class="col-md-6">
+      <div class="list-group">
+        <div class="list-group-item d-flex justify-content-between align-items-center">
+          <span>Syntax check</span>
+          <span class="badge bg-{{ 'success' if syntax_ok else 'danger' }}">{{ 'Valid' if syntax_ok else 'Invalid' }}</span>
+        </div>
+        <div class="list-group-item d-flex justify-content-between align-items-center">
+          <span>Points earned</span>
+          <span class="badge bg-primary">{{ points }}</span>
+        </div>
+        <div class="list-group-item">
+          <strong>Feedback grade</strong>: {{ feedback.grade }}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h5>Tips</h5>
+      <ul>
+        {% for tip in feedback.tips %}
+        <li>{{ tip }}</li>
+        {% endfor %}
+      </ul>
+      <small class="text-muted">Feedback powered by Google Gemini (or defaults if unavailable).</small>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "bootstrap/base.html" %}
+{% block styles %}{{ super() }}<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">{% endblock %}
+{% block title %}{{ project.title }} - PyQuest{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <a href="/" class="btn btn-link">← Back</a>
+  <h2 class="mt-2">{{ project.title }}</h2>
+  <p class="lead">{{ project.description }}</p>
+
+  <h5>Steps</h5>
+  <ol>
+    {% for step in project.steps %}
+    <li>{{ step }}</li>
+    {% endfor %}
+  </ol>
+
+  <div class="card mt-4">
+    <div class="card-body">
+      <h5 class="card-title">Ask a question</h5>
+      <form method="POST">
+        <div class="mb-3">
+          <textarea class="form-control" name="question" rows="3" placeholder="Type your question... (e.g., How should I structure functions?)"></textarea>
+        </div>
+        <button class="btn btn-secondary" type="submit">Ask</button>
+      </form>
+      {% if qa_answer %}
+      <div class="alert alert-info mt-3">{{ qa_answer }}</div>
+      <div class="form-text">This is a mock response. Future upgrade: integrate Gemini chat.</div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="card mt-4">
+    <div class="card-body">
+      <h5 class="card-title">Submit your code</h5>
+      <p class="card-text">Paste your Python code below. We'll check syntax only (no execution). Then you'll see feedback and points.</p>
+      <form method="POST" action="{{ url_for('submit_code', project_id=project.id) }}">
+        <div class="mb-3">
+          <textarea class="form-control" name="code" rows="12" placeholder="# Paste your Python code here" required></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Submit Code</button>
+      </form>
+      <p class="form-text mt-2">Run and test your code in VS Code or Google Colab.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
