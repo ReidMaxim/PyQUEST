@@ -1,0 +1,20 @@
+/* Minimal custom styles for PyQuest */
+body {
+  background-color: #f8f9fa;
+}
+
+.pyquest-card {
+  background: #ffffff;
+  border: 1px solid #e9ecef;
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+}
+
+.code-block {
+  background: #272822;
+  color: #f8f8f2;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+}
+
